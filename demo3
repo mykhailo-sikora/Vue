@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>vue_3</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <!--  5. Ітеруємо масив usersFromJSON і сетаємо у відповідні проперті. -->
+      <myusers
+        v-for="user in usersFromJSON"
+        :id="user.id"
+        :name="user.name"
+        :username="user.username"
+        :email="user.email"
+        :company="user.company"
+      ></myusers>
+    </div>
+
+    <script>
+      //4. Створюємо компонент (вказємо проперті)
+      let userComponents = Vue.extend({
+        template: `
+        <div> 
+            <br>
+            <div>id - {{id}} </div> 
+            <div>name -  {{name}}</div> 
+            <div>username -  {{username}}</div> 
+            <div>email -  {{email}}</div> 
+            <div>company -  {{company.name}} <br> {{company.bs}}</div> 
+            <br>
+            <button>Show all info in console</button>
+            
+        </div>
+        `,
+
+        props: {
+          id: Number,
+          name: String,
+          username: String,
+          email: String,
+          company: { name: String, bs: String }
+        }
+      });
+
+      Vue.component("myusers", userComponents);
+
+      //    1. Створюємо апку
+      let vue = new Vue({
+        el: "#app",
+        mounted: function() {
+          fetch("http://jsonplaceholder.typicode.com/users") //2. Робимо запит до сервера, щоб отримати юзерів
+            .then(value => value.json())
+            .then(value => {
+              this.usersFromJSON = value;
+            });
+        },
+        data: function() {
+          return {
+            usersFromJSON: []
+          };
+        }
+      });
+    </script>
+
+    <!-- 
+            1. Створюємо апку;
+            2. Робимо запит до сервера, щоб отримати юзерів;
+            3. Після того, як отримали запит від джейсон плейс холдер.
+               Вставляємо цих юзерів в проретрю usersFromJSON;
+            4. Створюємо компонент (вказємо проперті);
+            5. Ітеруємо масив usersFromJSON і сетаємо у відповідні проперті.
+
+     -->
+  </body>
+</html>
