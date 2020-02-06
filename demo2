@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>vue_2</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <!-- Loops "For of" like "for in"))) -->
+      <!--  -->
+      <user
+        v-for="user in users"
+        :name="user.name"
+        :age="user.age"
+        :status="user.status"
+      ></user>
+    </div>
+
+    <script>
+      let users = [
+        { name: "Vasya", age: 31, status: false },
+        { name: "Tinder", age: 23, status: true },
+        { name: "Nadya", age: 34, status: false },
+        { name: "Katya", age: 25, status: false },
+        { name: "Vasya", age: 18, status: true },
+        { name: "Olya", age: 34, status: true },
+        { name: "Andrii", age: 55, status: false }
+      ];
+
+      let userComponent = Vue.extend({
+        //function for rendering propertis in teg "<user>"
+        template: ` <div>   {{name}} {{age}} {{status}} </div> `,
+        props: ["name", "age", "status"] //don't forgot!!!
+      });
+
+      Vue.component("user", userComponent);
+
+      let vue = new Vue({
+        el: "#app",
+        data: function() {
+          return { users };
+        },
+        components: {
+          user: userComponent
+        }
+      });
+    </script>
+  </body>
+</html>
