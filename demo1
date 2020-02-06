@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>VUE JS</title>
+  </head>
+  <body>
+    <div></div>
+    
+    <cool></cool>
+
+    <script>
+      let users = [
+        { name: "Vasya", age: 31, status: false },
+        { name: "Tinder", age: 23, status: true },
+        { name: "Nadya", age: 34, status: false },
+        { name: "Katya", age: 25, status: false },
+        { name: "Vasya", age: 18, status: true },
+        { name: "Olya", age: 34, status: true },
+        { name: "Andrii", age: 55, status: false }
+      ];
+
+      function userComponent(componentName, users) {
+        for (const user of users) {
+          let divContainer = document.createElement("div");
+
+          let divName = document.createElement("h3");
+          let divAge = document.createElement("div");
+          let divStatus = document.createElement("div");
+
+          divContainer.classList.add("divContainer");
+          divName.classList.add("name");
+          divAge.classList.add("age");
+          divStatus.classList.add("status");
+
+          divName.innerText = user.name;
+          divAge.innerText = user.age;
+          divStatus.innerText = user.status;
+
+          document.body.appendChild(divName);
+          document.body.appendChild(divAge);
+          document.body.appendChild(divStatus);
+
+          document.body.appendChild(divContainer);
+
+          let tags = document.getElementsByTagName(componentName);
+          for (const tag of tags) {
+            tag.appendChild(divContainer);
+          }
+        }
+      }
+
+      userComponent("cool", users);
+      userComponent("cool", users);
+    </script>
+  </body>
+</html>
