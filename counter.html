@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>vue5</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <!-- 
+Зробити каунтер.
+Є число.
+У якого є 5 кнопок (+1, -1, +100, -100, очистити), а також інпут з кнопкою, у яке можна написати довільне число.
+ -->
+
+    <div id="count">
+      <button @click="addOne()">+1</button>
+      <button @click="minusOne">-1</button>
+      <button @click="add100">+100</button>
+      <button @click="minus100(100)">-100</button>
+      <input
+        id="input"
+        placeholder="Enter your number"
+        type="number"
+        autofocus
+      />
+      <button @click="inputCount()">send</button>
+      <button @click="clear" style="background: rgb(233, 41, 41)">reset</button>
+      <p>counter: {{counter}}</p>
+    </div>
+
+    <script>
+      new Vue({
+        el: "#count",
+        data: {
+          counter: 0
+        },
+        methods: {
+          addOne() {
+            this.counter++;
+          },
+          minusOne() {
+            this.counter--;
+          },
+          add100() {
+            this.counter += 100;
+          },
+          minus100(limit100) {
+            if (this.counter > minus100) this.counter--;
+          },
+          minus100(limit100) {
+            if (this.counter >= limit100) {
+              this.counter -= 100;
+            } else if (this.counter < limit100) {
+              this.counter = 0;
+            }
+          },
+          clear() {
+            this.counter = 0;
+          },
+          inputCount() {
+            this.counter = document.getElementById("input").value;
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
