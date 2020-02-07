@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Classwork</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+  
+<!-- 
+з фетчити дані з сайту:
+https://jsonplaceholder.typicode.com/
+posts, photos, users.
+Вивести їх у компоненті 
+-->
+
+
+    <div id="app">
+      <posts
+        v-for="post in postFromJson"
+        :userid="post.userId"
+        :title="post.title"
+        :body="post.body"
+      >
+      </posts>
+
+      <users
+        v-for="user in userFromJson"
+        :name="user.name"
+        :username="user.username"
+        :email="user.email"
+      >
+      </users>
+
+      <fotos v-for="foto in fotosFromJson" :thumbnailurl="foto.thumbnailUrl">
+      </fotos>
+    </div>
+
+    <script>
+      let myComponent = Vue.extend({
+        template: `
+        <div>
+        <p> {{userid}}  </p>
+        <h4> {{title}} </h4>
+        <div>  {{body}}  </div>
+        </div>`,
+        props: { userid: Number, title: String, body: String }
+      });
+
+      let myComponentForUsers = Vue.extend({
+        template: `
+        <div>
+        <p> {{name}}  </p>
+        <div> {{username}} </div>
+        <div>  {{email}}  </div>
+        </div>`,
+        props: { name: String, username: String, email: String }
+      });
+
+      let myComponentForFotos = Vue.extend({
+        template: `
+        <div>
+            <img :src="thumbnailurl">
+        </div>`,
+        props: { thumbnailurl: String }
+      });
+      Vue.component("posts", myComponent);
+      Vue.component("users", myComponentForUsers);
+      Vue.component("fotos", myComponentForFotos);
+
+      let vue = new Vue({
+        el: "#app",
+        mounted: function() {
+          fetch("http://jsonplaceholder.typicode.com/posts")
+            .then(value => value.json())
+            .then(value => {
+              this.postFromJson = value;
+            });
+
+          fetch("http://jsonplaceholder.typicode.com/users")
+            .then(value => value.json())
+            .then(value => {
+              this.userFromJson = value;
+            });
+          fetch("http://jsonplaceholder.typicode.com/photos")
+            .then(value => value.json())
+            .then(value => {
+              this.fotosFromJson = value;
+            });
+        },
+        data: function() {
+          return {
+            postFromJson: []
+          };
+        },
+        data: function() {
+          return {
+            userFromJson: []
+          };
+        },
+        data: function() {
+          return {
+            fotosFromJson: []
+          };
+        }
+      });
+    </script>
+  </body>
+</html>
